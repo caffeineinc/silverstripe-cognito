@@ -1,0 +1,20 @@
+---
+Name: myproject
+---
+SilverStripe\Core\Manifest\ModuleManifest:
+  project: app
+
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Security\AuthenticationHandler:
+    class: SilverStripe\Security\RequestAuthenticationHandler
+    properties:
+      Handlers:
+        cognito: %$App\Cognito\CognitoAuthenticationHandler
+  App\Cognito\CognitoAuthenticationHandler:
+    properties:
+      CascadeInTo: '%$SilverStripe\Security\MemberAuthenticator\SessionAuthenticationHandler'
+
+
+SilverStripe\Security\Member:
+  extensions:
+    -  App\Cognito\CognitoMemberExtension
