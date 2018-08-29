@@ -13,8 +13,17 @@ SilverStripe\Core\Injector\Injector:
   App\Cognito\CognitoAuthenticationHandler:
     properties:
       CascadeInTo: '%$SilverStripe\Security\MemberAuthenticator\SessionAuthenticationHandler'
-
-
 SilverStripe\Security\Member:
   extensions:
     -  App\Cognito\CognitoMemberExtension
+
+---
+Name: Cognito Authentication
+After:
+  - '#coresecurity'
+---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Security\Security:
+    properties:
+      Authenticators:
+        default: %$App\Cognito\CognitoLoginHandler
